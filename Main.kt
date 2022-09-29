@@ -182,7 +182,7 @@ fun main()
     }
 
     if (game.isEndGame)
-        println("${if (game.whoMove) "xxx" else "ooo"} Победил ${if (game.whoMove) "первый" else "второй"} игрок ${if (game.whoMove) "xxx" else "ooo"}")
+        println("${if (game.whoMove) "xxx" else "ooo"} Победил ${if (game.whoMove) "второй" else "первый"} игрок ${if (game.whoMove) "xxx" else "ooo"}")
     else
         println("Программа завершена!")
 }
