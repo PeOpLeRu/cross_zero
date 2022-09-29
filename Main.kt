@@ -18,13 +18,14 @@ class Game(val sizeField : Int)
         }
 
         field[lastY * sizeField + lastX][y * sizeField + x] = if (whoMove) 1 else 0
-        lastX = x
-        lastY = y
 
         checkWinning(lastY * sizeField + lastX)
 
         if (isEndGame)
             return
+
+        lastX = x
+        lastY = y
 
         whoMove = !whoMove
     }
@@ -161,7 +162,7 @@ class InputHandler(private val gameObj : Game)
 
 fun main()
 {
-    val N = 3
+    val N = 2
     val game = Game(N)
     val strInputHandler = InputHandler(game)
 
@@ -174,14 +175,14 @@ fun main()
 
         strInputHandler.handler(strInput)
 
-        if (!game.isEndGame && !strInputHandler.error && !strInputHandler.exit)
+        if (!game.isEndGame && !strInputHandler.exit)
         {
             println("Ход ${if (game.whoMove) "крестиков" else "ноликов"} в поле (${game.lastY + 1}, ${game.lastX + 1})")
         }
     }
 
     if (game.isEndGame)
-        println("${if (game.whoMove) "ooo" else "xxx"} Победил ${if (game.whoMove) "первый" else "второй"} игрок ${if (game.whoMove) "ooo" else "xxx"}")
+        println("${if (game.whoMove) "xxx" else "ooo"} Победил ${if (game.whoMove) "первый" else "второй"} игрок ${if (game.whoMove) "xxx" else "ooo"}")
     else
         println("Программа завершена!")
 }
