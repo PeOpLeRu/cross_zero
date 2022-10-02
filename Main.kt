@@ -30,8 +30,12 @@ class Game(val sizeField : Int)
         whoMove = !whoMove
     }
 
-    fun printSubField(numberField : Int)
+    fun printSubField(y : Int, x : Int)
     {
+        val numberField = y * sizeField + x
+
+        println("___($y, $x)___")
+
         print("|" + "=".repeat(sizeField*2-1) + "|")
 
         for (i in 0 until sizeField)
@@ -75,7 +79,7 @@ class Game(val sizeField : Int)
                     print(" ")
                 }
                 if (numRow != sizeField - 1)
-                print("|\n| " + ("-".repeat(sizeField*2+1) + " | ").repeat(sizeField) + "\n")
+                    print("|\n| " + ("-".repeat(sizeField*2+1) + " | ").repeat(sizeField) + "\n")
             }
             print("|\n| " + ("=".repeat(sizeField*2+1) + " | ").repeat(sizeField) + "\n")
         }
@@ -83,7 +87,7 @@ class Game(val sizeField : Int)
 
     fun printNowField()
     {
-        printSubField(lastY * sizeField + lastX)
+        printSubField(lastY, lastX)
     }
 
     // Проверяет был ли ход победным и влияет на флаг isEndGame
@@ -106,10 +110,10 @@ class Game(val sizeField : Int)
         val leftDiagonal = nowField.slice(0 until totalFields step sizeField+1).distinct()
         val rightDiagonal = nowField.slice(sizeField until totalFields step sizeField-1).distinct()
         if ((leftDiagonal.size == 1 && leftDiagonal[0] != -1) || (rightDiagonal.size == 1 && rightDiagonal[0] != -1))
-            {
-                isEndGame = true
-                return
-            }
+        {
+            isEndGame = true
+            return
+        }
     }
 }
 
@@ -128,7 +132,7 @@ class InputHandler(private val gameObj : Game)
             else if (command == "pnf" || command == "print now field")
                 gameObj.printNowField()
             else if ((command.contains("pf") || command.contains("print field")) && command.split(' ').size == 3)
-                gameObj.printSubField(command.split(' ')[1].toInt() * gameObj.sizeField + command.split(' ')[2].toInt())
+                gameObj.printSubField(command.split(' ')[1].toInt(), command.split(' ')[2].toInt())
             else if ((command[0] == 'm' || command.contains("move")) && command.split(' ').size == 3)
                 gameObj.doMove(command.split(' ')[1].toInt() - 1, command.split(' ')[2].toInt() - 1)
             else if (command[0] == 'h' || command == "help")
@@ -162,7 +166,7 @@ class InputHandler(private val gameObj : Game)
 
 fun main()
 {
-    val N = 2
+    val N = 3
     val game = Game(N)
     val strInputHandler = InputHandler(game)
 
